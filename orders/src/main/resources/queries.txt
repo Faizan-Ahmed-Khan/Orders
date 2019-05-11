@@ -1,0 +1,63 @@
+#query
+
+{
+  orders{
+    id
+    productId
+    customerId
+  }
+}
+
+{
+	OrdersByCustomerId(customerId:"1"){
+		id
+    	productId
+    	customerId
+	}
+}
+
+{
+	OrdersByProductId(productId:"1"){
+		id
+    	productId
+    	customerId
+	}
+}
+
+{
+	OrdersByOrderId(id:"1"){
+		id
+    	productId
+    	customerId
+	}
+}
+
+
+
+#mutation
+
+mutation{
+  	createOrder(id: "1",productId:"1", customerId:"1"){
+    	id
+    	productId
+    	customerId
+  	}
+}
+
+mutation{
+	updateOrder(id: "1",productId:"2", customerId:"2"){
+		id
+    	productId
+    	customerId
+  }
+}
+
+mutation{
+	deleteOrder(id: "1")
+}
+
+mutation{
+	deleteOrders
+}
+
+
