@@ -13,17 +13,6 @@ public class Customer {
 	private String lastName;
 	private int age;
 
-	@Override
-	public String toString() {
-		return "Customer -> firstName :: " + firstName + " lname:: " + lastName + " age:: " + age;
-	}
-
-//	public Customer(String firstName, String lastName, int age) {
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.age = age;
-//	}
-
 	public String getId() {
 		return id;
 	}
@@ -34,6 +23,18 @@ public class Customer {
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public Customer() {
+		super();
+	}
+
+	public Customer(String id, String firstName, String lastName, int age) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
 	}
 
 	public void setFirstName(String firstName) {
