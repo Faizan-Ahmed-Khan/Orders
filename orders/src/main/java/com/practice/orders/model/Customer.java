@@ -1,9 +1,10 @@
 package com.practice.orders.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import lombok.Data;
+
+@Data
 public class Customer {
 
 	@Id
@@ -17,11 +18,11 @@ public class Customer {
 		return "Customer -> firstName :: " + firstName + " lname:: " + lastName + " age:: " + age;
 	}
 
-	public Customer(String firstName, String lastName, int age) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-	}
+//	public Customer(String firstName, String lastName, int age) {
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.age = age;
+//	}
 
 	public String getId() {
 		return id;

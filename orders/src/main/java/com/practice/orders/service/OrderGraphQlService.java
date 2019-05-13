@@ -1,13 +1,16 @@
 package com.practice.orders.service;
 
-import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.practice.orders.model.Customer;
 import com.practice.orders.model.Order;
+import com.practice.orders.model.OrderDetails;
+import com.practice.orders.model.Product;
 import com.practice.orders.repository.IOrderRepo;
 
 import io.leangen.graphql.annotations.GraphQLMutation;
@@ -20,13 +23,24 @@ public class OrderGraphQlService {
 
 	@Autowired
 	private IOrderRepo orderRepo;
-	
+
 	@Autowired
 	private GraphQLClient client;
 
 	@GraphQLQuery(name = "orders")
-	public List<Order> findAllOrders() {
-		return orderRepo.findAll();
+	public List<OrderDetails> findAllOrders() {
+		List<Order> orderList = orderRepo.findAll();
+		List<OrderDetails> orderDtlList = new ArrayList<OrderDetails>();
+		orderList.forEach(o -> {
+			try {
+				OrderDetails od = new OrderDetails(o.getId(), o.getProductId(), o.getCustomerId(),
+						client.getProduct(o.getProductId()), client.getCustomer(o.getCustomerId()));
+				orderDtlList.add(od);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		return orderDtlList;
 	}
 
 	@GraphQLQuery(name = "OrdersByCustomerId")
@@ -46,12 +60,15 @@ public class OrderGraphQlService {
 	}
 
 	@GraphQLQuery(name = "OrdersByOrderId")
-	public Order findByOrderId(String id) throws IllegalStateException, MalformedURLException {
+	public OrderDetails findByOrderId(String id) throws Exception {
 		Optional<Order> o = orderRepo.findById(id);
-		client.sendRequest();
+		Product p = client.getProduct(o.get().getProductId());
+		Customer c = client.getCustomer(o.get().getCustomerId());
 		if (!o.isPresent())
 			throw new RuntimeException("Order doesn't exist for given orderId:: " + id);
-		return o.get();
+
+		OrderDetails od = new OrderDetails(o.get().getId(), o.get().getProductId(), o.get().getCustomerId(), p, c);
+		return od;
 	}
 
 	@GraphQLMutation(name = "createOrder")
@@ -84,7 +101,7 @@ public class OrderGraphQlService {
 	@GraphQLMutation(name = "deleteOrders")
 	public String deleteAll() {
 		orderRepo.deleteAll();
-		return "All Products Deleted Successfully";
+		return "All ProductQuery Deleted Successfully";
 	}
 
 }
