@@ -1,0 +1,42 @@
+#query
+
+{
+  customers{
+    id
+    firstName
+  }
+}
+
+{
+	customer(firstName:"zeeshan"){
+		id
+		firstName
+	}
+}
+
+
+
+#mutation
+
+mutation{
+  createCustomer(firstName:"zeeshan",lastName:"ahmed",age:26){
+    id
+    firstName
+    lastName
+  }
+}
+
+mutation{
+	updateCustomer(firstName:"faizan",lastName:"ahmed",age:19){
+		id
+    	firstName
+    	lastName
+  }
+}
+
+mutation{
+	deleteCustomer(firstName:"zeeshan")
+
+}
+
+
