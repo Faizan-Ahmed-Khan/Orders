@@ -1,0 +1,47 @@
+#query
+
+{
+  products{
+    id
+    name
+    cost
+  }
+}
+
+{
+	product(name:"Mobile"){
+		id
+		name
+		cost
+	}
+}
+
+
+
+#mutation
+
+mutation{
+  createProduct(id:"1", name:"Laptop", cost:"32000"){
+    id
+    name
+    cost
+  }
+}
+
+mutation{
+	updateProduct(name:"Laptop", cost:"2700"){
+		id
+    	name
+    	cost
+  }
+}
+
+mutation{
+	deleteProduct(name:"Mobile")
+}
+
+mutation{
+	deleteProducts
+}
+
+
