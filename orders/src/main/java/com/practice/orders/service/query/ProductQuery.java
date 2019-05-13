@@ -6,7 +6,8 @@ import io.aexp.nodes.graphql.annotations.GraphQLArgument;
 import io.aexp.nodes.graphql.annotations.GraphQLArguments;
 
 public class ProductQuery {
-	@GraphQLArguments({ @GraphQLArgument(name = "id") })
+	@GraphQLArguments({ @GraphQLArgument(name = "id", optional = true),
+			@GraphQLArgument(name = "name", optional = true) })
 
 	private Product product;
 
